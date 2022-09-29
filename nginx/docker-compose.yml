@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: nginx
+      volumes:
+        wp_db:/var/www/html
+    restart: always
     ports:
       - 443:443
