@@ -3,8 +3,13 @@
 FROM debian:buster
 
 RUN apt-get update \
-	&& apt-get install -y mariadb-server \
-	&&	service mysql start
+	&& apt-get install -y mariadb-server
+
+COPY script.sh /
+RUN chmod +x /script.sh 
+
+
+ENTRYPOINT ["/script.sh"]
 
 
 #docker network ls

@@ -2,11 +2,10 @@
 
 FROM debian:buster
 
+WORKDIR /tmp
 
-WORKDIR /var/www/
-RUN apt-get update \
-    && apt-get install -y wget php-fpm \
-    && wget https://wordpress.org/latest.tar.gz \
-    && tar -xvf latest.tar.gz \
-    && rm -rf latest.tar.gz \
-    && mv wordpress html
+COPY script.sh /
+RUN chmod +x /script.sh 
+
+
+ENTRYPOINT ["/script.sh"]

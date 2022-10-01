@@ -1,0 +1,37 @@
+version: '3'
+
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - wp_db:/var/www/html
+    ports:
+      - 443:443
+  mariadb:
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    # volumes:
+    #    - dbdata:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+  wordpress:
+    build:
+      context: ./wordpress
+      dockerfile: Dockerfile
+    volumes:
+      - wp_db:/tmp/wordpress
+
+
+
+
+volumes:
+  wp_db:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/ouseqqam/Desktop/data
