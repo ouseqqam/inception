@@ -14,16 +14,28 @@ services:
     build:
       context: ./mariadb
       dockerfile: Dockerfile
-    # volumes:
-    #    - dbdata:/var/lib/mysql
+    volumes:
+       - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
     environment:
-      MARIADB_ROOT_PASSWORD: example
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=inception
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=1234
   wordpress:
     build:
       context: ./wordpress
       dockerfile: Dockerfile
+    ports:
+      - 9000:9000
     volumes:
       - wp_db:/tmp/wordpress
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=1234
+      - WORDPRESS_DB_NAME=inception
 
 
 
@@ -35,3 +47,4 @@ volumes:
       o: bind
       type: none
       device: /Users/ouseqqam/Desktop/data
+  db_data:
