@@ -2,10 +2,11 @@
 
 FROM debian:buster
 
-WORKDIR /tmp
+WORKDIR /var/www/html/
 
 COPY script.sh /
 RUN chmod +x /script.sh 
 
+EXPOSE 9000
 
 ENTRYPOINT ["/script.sh"]
