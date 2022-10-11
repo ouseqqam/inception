@@ -1,42 +1,6 @@
 version: '3'
 
 
-services:
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    volumes:
-      - wp_db:/var/www/html
-    ports:
-      - 443:443
-  # mariadb:
-  #   build:
-  #     context: ./mariadb
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #      - db_data:/var/lib/mysql
-  #   ports:
-  #     - 3306:3306
-    # environment:
-    #   - MYSQL_ROOT_PASSWORD=12345
-    #   - MYSQL_DATABASE=inception
-    #   - MYSQL_USER=wordpress
-    #   - MYSQL_PASSWORD=1234
-  wordpress:
-    build:
-      context: ./wordpress
-      dockerfile: Dockerfile
-    ports:
-      - 9000:9000
-    volumes:
-      - wp_db:/var/ww/html
-    # environment:
-    #   - WORDPRESS_DB_HOST=mariadb
-    #   - WORDPRESS_DB_USER=wordpress
-    #   - WORDPRESS_DB_PASSWORD=1234
-    #   - WORDPRESS_DB_NAME=inception
-
 volumes:
   wp_db:
     driver: local
@@ -45,3 +9,41 @@ volumes:
       type: none
       device: /Users/ouseqqam/Desktop/data
   db_data:
+
+services:
+  mariadb:
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    volumes:
+       - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=inception
+      - MYSQL_USER=wp
+      - MYSQL_PASSWORD=1234
+  wordpress:
+    depends_on:
+      - mariadb
+    build:
+      context: ./wordpress
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+    volumes:
+      - wp_db:/var/www/html
+    environment:
+      - WORDPRESS_DB_HOST=mariadb:3306
+      - WORDPRESS_DB_USER=wp
+      - WORDPRESS_DB_PASSWORD=1234
+      - WORDPRESS_DB_NAME=inception
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - wp_db:/var/www/html
+    ports:
+      - 443:443
