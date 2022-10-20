@@ -5,8 +5,9 @@ FROM debian:buster
 WORKDIR /var/www/html
 
 COPY script.sh /
-RUN chmod +x /script.sh 
+RUN chmod +x /script.sh
+
 ENTRYPOINT ["/script.sh"]
 
 
-EXPOSE 900
+EXPOSE 9000
