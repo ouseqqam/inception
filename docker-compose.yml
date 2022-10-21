@@ -15,14 +15,14 @@ services:
     build:
       context: ./mariadb
       dockerfile: Dockerfile
-    restart: unless-stopped
     volumes:
        - db_data:/var/lib/mysql
-    env_file:
-      - .env
+    environment:
+     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
   wordpress:
-    depends_on:
-      - mariadb
     build:
       context: ./wordpress
       dockerfile: Dockerfile
