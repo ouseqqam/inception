@@ -17,22 +17,16 @@ services:
       dockerfile: Dockerfile
     volumes:
        - db_data:/var/lib/mysql
-    environment:
-     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    env_file:
+      - .env
   wordpress:
     build:
       context: ./wordpress
       dockerfile: Dockerfile
     volumes:
       - wp_db:/var/www/html
-    environment:
-      - WORDPRESS_DB_HOST=mariadb
-      - WORDPRESS_DB_USER=wp
-      - WORDPRESS_DB_PASSWORD=1234
-      - WORDPRESS_DB_NAME=wordpress
+    env_file:
+      - .env
   nginx:
     build:
       context: ./nginx
