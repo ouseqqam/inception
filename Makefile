@@ -1,9 +1,8 @@
 
 all:
-	docker-compose up --build
+	docker-compose -f srcs/docker-compose.yml up --build
 clean:
-	docker-compose down --rmi all -v
-re:
-	docker-compose down --rmi all -v
+	docker-compose -f srcs/docker-compose.yml down --rmi all -v
 	rm -rf /Users/ouseqqam/Desktop/data/wordpress
-	docker-compose up --build
+re: clean
+	docker-compose -f srcs/docker-compose.yml up --build

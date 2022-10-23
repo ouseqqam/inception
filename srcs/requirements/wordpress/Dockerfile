@@ -4,7 +4,7 @@ FROM debian:buster
 
 WORKDIR /var/www/html/wordpress
 
-COPY script.sh /
+COPY ./conf/script.sh /
 RUN chmod +x /script.sh
 RUN mkdir /run/php
 ENTRYPOINT ["/script.sh"]
