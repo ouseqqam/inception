@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 
 
 volumes:
@@ -10,10 +10,10 @@ volumes:
 
 services:
   mariadb:
-    build:
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile
-    restart: on-failure
+    build: ./requirements/mariadb
+    image: mariadb
+    container_name: mariadb
+    restart: always
     volumes:
        - db_data:/var/lib/mysql
     env_file:
@@ -23,10 +23,10 @@ services:
   wordpress:
     depends_on:
       - mariadb
-    build:
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
-    restart: on-failure
+    build: ./requirements/wordpress
+    image: wordpress
+    container_name: wordpress
+    restart: always
     volumes:
       - wp_db:/var/www/html
     env_file:
@@ -36,10 +36,10 @@ services:
   nginx:
     depends_on:
       - wordpress
-    build:
-      context: ./requirements/nginx
-      dockerfile: Dockerfile
-    restart: on-failure
+    build: ./requirements/nginx
+    image: nginx
+    container_name: nginx
+    restart: always
     volumes:
       - wp_db:/var/www/html
     ports:
@@ -49,4 +49,5 @@ services:
 
 networks:
   inception:
+    name: inception
     

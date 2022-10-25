@@ -1,6 +1,7 @@
 #!/bin/bash
+
 apt-get update
-apt-get install -y curl  php-cgi php-fpm php-mysql
+apt-get install -y curl php-fpm php-mysql
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
@@ -15,8 +16,3 @@ sed -i 's/localhost/'${WORDPRESS_DB_HOST}'/g' wp-config.php
 wp core install --title="Inception" --admin_user=$WORDPRESS_DB_ADMIN --admin_password=$WORDPRESS_DB_ADMIN_PASSWORD --admin_email="ouseqqam@student.1337.ma" --url="https://localhost/" --allow-root
 wp user create $WORDPRESS_DB_USER "t@gmail.com" --user_pass=$WORDPRESS_DB_USER_PASSWORD --allow-root
 exec "$@"
-
-
-
-
-#tail -f > /dev/null
