@@ -1,11 +1,11 @@
 version: '3.5'
 
-
 volumes:
   wp_db:
     driver_opts:
       o: bind
-      device: /Users/ouseqqam/Desktop/data
+      type: none
+      device: /home/ouseqqam/data
   db_data:
 
 services:
